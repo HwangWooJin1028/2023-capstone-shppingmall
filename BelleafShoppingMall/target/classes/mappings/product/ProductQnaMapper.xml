@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productQnaDAO">
+
+	<!-- 상품에 관련된 모든 리스트 출력 -->
+	<select id="qnaNickByProduct" parameterType="int" resultType="ProductQnaNickVO">
+		SELECT QNA.*, PRODUCT.PRODUCT_NAME, USERS.USER_NICKNAME
+		FROM PRODUCT_QNA QNA, PRODUCT, USERS
+		WHERE QNA.PRODUCT_ID = #{product_id} 
+		AND QNA.PRODUCT_ID = PRODUCT.PRODUCT_ID
+		AND QNA.USER_ID = USERS.USER_ID
+		ORDER BY QNA.QNA_GROUP, QNA.QNA_GROUP_NUMBER
+	</select>
+	
+	<!-- 상품상세페이지 - 상품 qna 페이징 리스트 -->
+	<select id="QnaListByProductID" parameterType="map" resultType="ProductQnaNickVO">
+	SELECT * FROM(SELECT ROWNUM R_NUM, A.* 
+	FROM ( SELECT QNA.*, PRODUCT.PRODUCT_NAME, USERS.USER_NICKNAME
+	FROM PRODUCT_QNA QNA, PRODUCT, USERS
+	WHERE QNA.PRODUCT_ID = #{product_id}
+	AND QNA.PRODUCT_ID = PRODUCT.PRODUCT_ID
+	AND QNA.USER_ID = USERS.USER_ID
+	ORDER BY QNA.QNA_GROUP, QNA.QNA_GROUP_NUMBER) A )
+	WHERE R_NUM BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- 상품상세페이지 - 상품 qna 페이징 리스트 총 개수 -->
+	<select id="QnaListCntByProductID" parameterType="int" resultType="int">
+	SELECT COUNT(*)
+	FROM PRODUCT_QNA
+	WHERE PRODUCT_ID = #{product_id}
+	</select>
+	
+	<!-- 관리자페이지 - 전체 상품 문의 조회 -->
+	<select id="adminPrdQnaList" parameterType="map" resultType="map">
+		SELECT * FROM(
+		SELECT ROWNUM R_NUM, A.*
+		FROM( SELECT QNA.*, PRODUCT.PRODUCT_NAME, USERS.USER_NICKNAME, PRODUCT.CATEGORY_CODE
+		FROM PRODUCT_QNA QNA, PRODUCT, USERS
+		WHERE QNA.Q_OR_A=0
+		AND QNA.PRODUCT_ID=PRODUCT.PRODUCT_ID
+		AND QNA.USER_ID=USERS.USER_ID
+		<if test="searchKeyword!=''">
+			<if test="searchCondition=='QNA_CONTENT'">
+				AND QNA.QNA_CONTENT LIKE '%' || #{searchKeyword} ||'%'
+			</if>
+			<if test="searchCondition=='PRODUCT_ID'">
+				AND PRODUCT.PRODUCT_ID = TO_NUMBER(#{searchKeyword})
+			</if>
+			<if test="searchCondition=='PRODUCT_NAME'">
+				AND PRODUCT.PRODUCT_NAME LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
+		<if test="prd_category!=''">
+			<if test="prd_category==1">
+				AND PRODUCT.CATEGORY_CODE=1
+			</if>
+			<if test="prd_category==2">
+				AND PRODUCT.CATEGORY_CODE=2
+			</if>
+			<if test="prd_category==3">
+				AND PRODUCT.CATEGORY_CODE=3
+			</if>
+			<if test="prd_category==4">
+				AND PRODUCT.CATEGORY_CODE=4
+			</if>
+			<if test="prd_category==5">
+				AND PRODUCT.CATEGORY_CODE=5
+			</if>
+		</if>
+		<if test="prd_state!=''">
+			<if test="prd_state==0">
+				AND PRODUCT.PRODUCT_STATE = 0
+			</if>
+			<if test="prd_state==1">
+				AND PRODUCT.PRODUCT_STATE = 1
+			</if>
+			<if test="prd_state==2">
+				AND PRODUCT.PRODUCT_STATE = 2
+			</if>
+		</if>
+		 ORDER BY QNA.QNA_ID DESC) A)
+		WHERE R_NUM BETWEEN TO_NUMBER(#{start}) AND TO_NUMBER(#{end}) 
+	</select>
+	
+	<!-- 관리자페이지 - 전체 상품문의 조회를 위한 전체 row 수 -->
+	<select id="adminPrdQnaListCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM PRODUCT_QNA QNA, PRODUCT, USERS
+		WHERE QNA.Q_OR_A=0
+		AND QNA.PRODUCT_ID = PRODUCT.PRODUCT_ID
+		AND QNA.USER_ID = USERS.USER_ID
+		<if test="searchKeyword!=''">
+			<if test="searchCondition=='QNA_CONTENT'">
+				AND QNA.QNA_CONTENT LIKE '%' || #{searchKeyword} ||'%'
+			</if>
+			<if test="searchCondition=='PRODUCT_ID'">
+				AND PRODUCT.PRODUCT_ID = TO_NUMBER(#{searchKeyword})
+			</if>
+			<if test="searchCondition=='PRODUCT_NAME'">
+				AND PRODUCT.PRODUCT_NAME LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
+		<if test="prd_category!=''">
+			<if test="prd_category==1">
+				AND PRODUCT.CATEGORY_CODE=1
+			</if>
+			<if test="prd_category==2">
+				AND PRODUCT.CATEGORY_CODE=2
+			</if>
+			<if test="prd_category==3">
+				AND PRODUCT.CATEGORY_CODE=3
+			</if>
+			<if test="prd_category==4">
+				AND PRODUCT.CATEGORY_CODE=4
+			</if>
+			<if test="prd_category==5">
+				AND PRODUCT.CATEGORY_CODE=5
+			</if>
+		</if>
+		<if test="prd_state!=''">
+			<if test="prd_state==0">
+				AND PRODUCT.PRODUCT_STATE = 0
+			</if>
+			<if test="prd_state==1">
+				AND PRODUCT.PRODUCT_STATE = 1
+			</if>
+			<if test="prd_state==2">
+				AND PRODUCT.PRODUCT_STATE = 2
+			</if>
+		</if>
+	</select>
+	
+	<!-- QNA_ID로 하나의 상품문의 조회(users의 user_nickname 포함) -->
+	<select id="adminPrdQnaNickSelectID" parameterType="ProductQnaNickVO" resultType="ProductQnaNickVO">
+		SELECT QNA.*, PRODUCT.PRODUCT_NAME, USERS.USER_NICKNAME
+		FROM PRODUCT_QNA QNA, PRODUCT, USERS
+		WHERE QNA.QNA_ID=#{qna_id}
+		AND QNA.PRODUCT_ID=PRODUCT.PRODUCT_ID
+		AND QNA.USER_ID=USERS.USER_ID
+	</select>
+	
+	<!-- 관리자 페이지 - QNA_ID로 하나의 상품문의 조회 -->
+	<select id="adminPrdQnaSelectID" parameterType="ProductQnaNickVO" resultType="ProductQnaNickVO">
+		SELECT QNA.*, PRODUCT.PRODUCT_NAME
+		FROM PRODUCT_QNA QNA, PRODUCT, USERS
+		WHERE QNA.QNA_ID=#{qna_id}
+		AND QNA.PRODUCT_ID=PRODUCT.PRODUCT_ID
+		AND QNA.USER_ID=USERS.USER_ID
+		ORDER BY QNA.QNA_GROUP, QNA.QNA_GROUP_NUMBER
+	</select>
+	
+	<!-- 관리자 페이지 - 하나의 상품문의 조회 -->
+	<select id="adminPrdQnaSelect" parameterType="ProductQnaNickVO" resultType="ProductQnaNickVO">
+		SELECT QNA.*, PRODUCT.PRODUCT_NAME
+		FROM PRODUCT_QNA QNA, PRODUCT, USERS
+		WHERE QNA.QNA_GROUP=#{qna_group}
+		AND QNA.PRODUCT_ID=PRODUCT.PRODUCT_ID
+		AND QNA.USER_ID=USERS.USER_ID
+		ORDER BY QNA.QNA_GROUP, QNA.QNA_GROUP_NUMBER
+	</select>
+	
+	<!-- 관리자 페이지 - 답변 수정 -->
+	<update id="adminAnsUpdate" parameterType="ProductQnaNickVO">
+		UPDATE PRODUCT_QNA SET
+		QNA_CONTENT=#{qna_content}
+		WHERE QNA_ID=#{qna_id}
+	</update>
+	
+	<!-- 관리자 페이지 - 답변 상태 변경 -->
+	<update id="adminAnsStateUpdate" parameterType="map">
+		UPDATE PRODUCT_QNA SET
+		PRODUCT_QNA_STATE=TO_NUMBER(#{product_qna_state})
+		WHERE QNA_ID=TO_NUMBER(#{qna_id})
+	</update>
+	
+	<!-- 관리자 페이지 - 문의 삭제 -->
+	<delete id="adminQnaDel" parameterType="ProductQnaNickVO">
+		DELETE FROM PRODUCT_QNA
+		WHERE QNA_GROUP=#{qna_group}
+	</delete>
+	
+	<!-- 관리자 페이지 - 답변 삭제 -->
+	<delete id="adminAnsDel" parameterType="ProductQnaNickVO">
+		DELETE FROM PRODUCT_QNA
+		WHERE QNA_GROUP=#{qna_group}
+		AND Q_OR_A=1
+	</delete>
+	
+	<!-- 관리자페이지 - 답변 등록 -->
+	<insert id="adminAnsInsert" parameterType="map">
+		INSERT INTO PRODUCT_QNA (QNA_ID, QNA_CONTENT, PRODUCT_ID, USER_ID, Q_OR_A, 
+		    QNA_GROUP_NUMBER, QNA_GROUP,PRODUCT_QNA_DATE, PRODUCT_QNA_STATE)
+		    VALUES ((SELECT NVL(MAX(QNA_ID) ,0)+1 FROM PRODUCT_QNA),#{qna_content},
+		    		TO_NUMBER(#{product_id}),#{user_id},1,
+		            (SELECT MAX(QNA_GROUP_NUMBER)+1 FROM PRODUCT_QNA WHERE QNA_GROUP = TO_NUMBER(#{qna_group})),
+		            TO_NUMBER(#{qna_group}), SYSDATE, 0)
+	</insert>
+
+	<!-- mypage - 상품 문의 입력(고객) -->
+	<insert id="insertMyQna" parameterType="ProductQnaVO">
+		INSERT INTO PRODUCT_QNA (QNA_ID, QNA_CONTENT, PRODUCT_ID, USER_ID, Q_OR_A, QNA_GROUP_NUMBER, QNA_GROUP,PRODUCT_QNA_DATE, PRODUCT_QNA_STATE)
+		VALUES ((SELECT NVL(MAX(QNA_ID)+1 ,0) FROM PRODUCT_QNA),#{qna_content},#{product_id},#{user_id},0,0,
+		        (SELECT NVL(MAX(QNA_ID)+1 ,0) FROM PRODUCT_QNA), SYSDATE, 0)
+	</insert>
+	
+	
+	<!-- mypage - 나의 전체 상품 문의 개수 가져오기 -->
+	<select id="myPrdQnaListCnt" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM PRODUCT_QNA
+		WHERE USER_ID = #{user_id}
+	</select>
+	
+	<!-- mypage - 나의 전체 상품 문의 가져오기 -->
+	<select id="myPrdQnaList" parameterType="map" resultType="map">
+		SELECT * FROM (SELECT ROWNUM R_NUM, A.* FROM (
+		SELECT Q.*, USERS.USER_NICKNAME, PRODUCT.PRODUCT_NAME, PRODUCT.CATEGORY_CODE
+		FROM PRODUCT_QNA Q, USERS, PRODUCT
+		WHERE Q.USER_ID = #{user_id}
+		AND Q.USER_ID = USERS.USER_ID
+		AND Q.PRODUCT_ID = PRODUCT.PRODUCT_ID
+		ORDER BY QNA_ID DESC) A )
+		WHERE R_NUM BETWEEN TO_NUMBER(#{start}) AND TO_NUMBER(#{end})
+	</select>
+
+</mapper>

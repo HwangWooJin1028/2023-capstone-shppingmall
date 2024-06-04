@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="orderDAO">
+	<!-- 주문정보 입력 -->
+	<insert id="insertOrder" parameterType="UserOrder">
+		INSERT INTO
+		USER_ORDER(ORDER_ID,USER_ID,
+		ORDER_DATE,
+		ORDER_ADDR,
+		ORDER_ADDR_D,
+		ORDER_ZIPCODE,
+		ORDER_RECEIVER,
+		ORDER_PHONE,
+		ORDER_TOTAL,
+		USER_STATUS)
+		VALUES(#{order_id}, #{user_id}, SYSDATE, #{order_addr}, #{order_addr_d}, #{order_zipcode},
+		#{order_receiver}, #{order_phone}, #{order_total}, 1)
+	</insert>
+	
+	<!-- 주문상세정보 입력 -->
+	<insert id="insertOrderDetail">
+		INSERT INTO USERORDER_DETAIL(ORDER_DETAIL_ID, ORDER_ID, PRODUCT_ID, USER_ORDER_CNT, USER_ID)
+		SELECT ORDERDETAIL_SEQ.NEXTVAL, #{order_id}, C.PRODUCT_ID, C.CART_PRODUCT_QTY, C.USER_ID
+		FROM CART C
+		WHERE USER_ID = #{user_id}
+	</insert>
+	
+	<!-- 카트 비우기 -->
+	<delete id="deleteAllCart">
+		DELETE FROM CART
+		WHERE USER_ID = #{user_id}
+	</delete>
+	
+	<!-- 결제창에서 쓰일 최근 주문 정보 가져오기 -->
+	<select id="selectUserOrder" resultType="UserOrder">
+		SELECT * FROM USER_ORDER
+		WHERE USER_ID = #{user_id}
+		AND ORDER_ID = #{order_id}
+	</select>
+	
+	<!-- 주문완료 후, 결제 테이블로 넘기기 -->
+	<insert id="insertPayment">
+		INSERT INTO PAYMENT P(P.BUYER_ADDR, P.BUYER_NAME, P.BUYER_POSTCODE, P.BUYER_TEL, P.IAMPORT_IMP_UID, P.ALL_SUM)
+		SELECT
+		O.ORDER_ADDR || ' ' || O.ORDER_ADDR_D as ADDR,
+		O.ORDER_RECEIVER,
+		O.ORDER_ZIPCODE,
+		O.ORDER_PHONE,
+		O.ORDER_ID,
+		O.ORDER_TOTAL
+		FROM USER_ORDER O
+		WHERE O.ORDER_ID = #{order_id}
+	</insert>
+	
+	<!-- 포인트 정립 -->
+	<update id="updatePoint">
+		UPDATE USERS
+		SET USER_POINT = USER_POINT + (SELECT O.ORDER_TOTAL * 0.05
+		FROM USER_ORDER O WHERE O.ORDER_ID = #{order_id})
+		WHERE USER_ID = #{user_id}
+	</update>
+	
+	<!-- 바로 구매 주문 상세 정보 입력 -->
+	<insert id="insertOrderDetailDirect">
+		INSERT INTO USERORDER_DETAIL(ORDER_DETAIL_ID, ORDER_ID, PRODUCT_ID, USER_ORDER_CNT, USER_ID)
+		VALUES(ORDERDETAIL_SEQ.NEXTVAL, #{order_id}, #{product_id}, #{user_order_cnt}, #{user_id})
+	</insert>
+	
+	<!-- 구매 이후 재고량 수정 -->
+	<update id="deleteInven">
+		UPDATE INVEN 
+		SET INVEN_STOCK = INVEN_STOCK - #{inven_stock},
+		INVEN_OUT = INVEN_OUT + #{inven_stock}
+		WHERE PRODUCT_ID = #{product_id}
+	</update>
+	
+	<!-- 구매 이후 구매한 상품 아이디, 수량 가져오기 -->
+	<select id="getIdQty" resultType="UserOrderDetail">
+		SELECT PRODUCT_ID, USER_ORDER_CNT
+		FROM USERORDER_DETAIL
+		WHERE ORDER_ID=#{order_id}
+	</select>
+	
+		<!-- mypage에서 내 주문 내역 출력 시 사용 -->
+	<select id="getMyOrder" resultType="com.shoppingmall.belleaf.user.vo.MyInfoVO">
+		SELECT UO.ORDER_ID, UO.ORDER_ADDR, UO.ORDER_ADDR_D, UO.ORDER_DATE
+		, UO.ORDER_ZIPCODE, UO.ORDER_RECEIVER, UO.ORDER_PHONE
+		, UO.ORDER_TOTAL, UO.USER_STATUS, UO.USER_ID
+		, UOD.ORDER_DETAIL_ID, UOD.USER_ORDER_CNT, UOD.PRODUCT_ID
+		, P.CATEGORY_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE, P.PRODUCT_STOCK 
+		, P.PRODUCT_INFO, P.PRODUCT_DISCOUNT, P.PRODUCT_STATE
+		, UR.REFUND_ID, UR.ORDER_DETAIL_ID, UR.REFUND_REASON
+		, UR.REFUND_STATUS, UR.REFUND_DATE, UR.REFUND_TOTAL
+		FROM USER_ORDER UO, USERORDER_DETAIL UOD, PRODUCT P, USERORDER_REFUND UR
+		WHERE UO.ORDER_ID = UOD.ORDER_ID
+		AND UOD.PRODUCT_ID = P.PRODUCT_ID
+		AND UOD.ORDER_DETAIL_ID = UR.ORDER_DETAIL_ID(+)
+		AND UO.USER_ID = #{user_id}
+		ORDER BY ORDER_DATE DESC
+	</select>
+</mapper>

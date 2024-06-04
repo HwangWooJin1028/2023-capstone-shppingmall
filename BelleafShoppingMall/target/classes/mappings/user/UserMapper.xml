@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userDAO">
+ 
+
+  
+	<!-- 회원가입 -->
+	<insert id="insertUser" parameterType="user">
+		INSERT 
+		INTO USERS
+    		(
+    		USER_ID, 
+    		USER_PW, 
+    		USER_NAME, 
+    		USER_NICKNAME, 
+    		USER_EMAIL, 
+    		USER_PHONE,
+    		USER_STATE
+    		)
+   		VALUES(
+    		#{user_id},
+    		#{user_pw},
+    		#{user_name},
+    		#{user_nickname},
+    		#{user_email},
+    		#{user_phone},
+    		1
+    		
+    		)
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="getUser" parameterType="user" 
+			resultType="user">
+			SELECT USER_ID, USER_PW, USER_NAME, USER_NICKNAME, USER_EMAIL, USER_GRADE,
+				 USER_POINT, USER_ADDR, USER_ADDR_D, USER_ZIPCODE, USER_STATE, USER_PHONE
+			FROM USERS
+			WHERE USER_ID = #{user_id} AND USER_PW = #{user_pw}
+	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="getId" parameterType="user" 
+			resultType="user">
+		SELECT USER_ID FROM USERS
+		WHERE USER_EMAIL = #{user_email}
+		AND USER_PHONE = #{user_phone}
+	</select>
+	
+	<!-- 중복체크 --><!--count(*)이기때문에결과값은 int이다.  --><!--DB에서 받은count값이 숫자이기때문에 int이다.  -->
+	<select id="idcheck"   resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM USERS
+			WHERE user_id = #{user_id}
+		]]>
+	</select>
+	
+	
+	<!--비밀번호 찾기 -->
+
+	<select id="getPwd" parameterType="user"
+	resultType="user">
+	SELECT USER_PW 
+	FROM USERS
+	WHERE USER_ID=#{user_id}
+	AND USER_EMAIL=#{user_email}
+	
+	</select>
+	
+	<!-- 회원정보 조회시 비밀번호 확인 -->
+	<select id="userPWCheck" parameterType="user" 
+	resultType="user">
+	
+		SELECT USER_PW FROM USERS
+		WHERE USER_ID = #{user_id}
+	</select>
+	
+		<!-- mypage - 회원 탈퇴 -->
+	<update id="secession" parameterType="com.shoppingmall.belleaf.user.UserVO">
+		UPDATE USERS 
+		SET USER_STATE = 0
+		WHERE USER_ID = #{user_id}
+		AND USER_PW = #{user_pw}
+	</update>
+	
+	<!-- mypage - 회원 수정 -->
+	<update id="updateUserInfo" parameterType="com.shoppingmall.belleaf.user.UserVO">
+		UPDATE USERS SET USER_PW = #{user_pw}, USER_NICKNAME = #{user_nickname},
+		USER_EMAIL = #{user_email}, USER_PHONE = #{user_phone},
+		USER_ADDR = #{user_addr}, USER_ADDR_D = #{user_addr_d},
+		USER_ZIPCODE = #{user_zipcode}
+		WHERE USER_ID = #{user_id}
+	</update>
+
+	<!-- mypage - 회원 정보 조회 시 비밀번호 확인 -->
+	<select id="userPWcheck" parameterType="com.shoppingmall.belleaf.user.UserVO" resultType="string">
+		SELECT USER_PW FROM USERS
+		WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id="getUserByIdPw" parameterType="com.shoppingmall.belleaf.user.UserVO" resultType="com.shoppingmall.belleaf.user.UserVO">
+		SELECT * FROM USERS
+		WHERE USER_ID = #{user_id}
+		AND USER_PW = #{user_pw}
+	</select>
+
+
+</mapper>

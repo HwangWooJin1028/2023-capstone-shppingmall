@@ -1,0 +1,101 @@
+@charset "UTF-8";
+.Paymentbody {
+	width: 70%; 
+	margin: auto;
+}
+/* header */
+.payArea { 
+	width: 70%; 
+	margin: auto; 
+}
+
+.floatClearClass {
+  clear: both;
+  float: none;
+}
+
+.pageTitleArea{
+	text-align: center;
+    color: rgb(92, 110, 86);
+    padding: 30px 0px 0px 0px;
+    font-size: x-large;
+}
+.pageTitleArea h1 {
+	margin-top: 0px;
+}
+
+/* body 에리어 */
+.payUserTable {
+	margin: 10px 0px;
+}
+.payUserTable th, .payUserTable td {
+  padding: 4px 0;
+  text-align: left;
+}
+.payMoneyTable {
+	margin: 10px 0px;
+}
+.payMoneyTable th, .payMoneyTable td {
+  padding: 4px 0;
+  text-align: left;
+}
+
+.payProductArea table {
+  width: 100%;
+  margin: 20px auto;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.payProductTable {
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 13px;
+  width: 100%;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.payProductTable th, .payProductTable td {
+  padding: 14px 0;
+  text-align: center;
+}
+
+.payProductTable tbody td {
+  padding-left: 28px;
+  padding-right: 14px;
+  border-top: 1px solid #e7e7e7;
+  cursor: default;
+}
+
+.payProductTable tbody th {
+  padding-left: 28px;
+  padding-right: 14px;
+  border-top: 1px solid #e7e7e7;
+}
+
+
+/*총결제금액 area*/
+
+
+
+
+/* 버튼 area */
+.payBtnArea {
+	 text-align: center;
+}
+.payBtnArea button{
+  width: 60%;
+  padding: 10px 10px;
+  background-color:white;
+  border: solid rgb(207,207,207);
+  border-width: 1px;
+  cursor: pointer;
+}
+.payBtnArea button:hover,
+.payBtnArea button:focus{
+  border: rgb(229, 170, 163);
+  background: rgb(229, 170, 163);
+  color: white;
+  transition: 0.7s;
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminUserOrderDAO">
+	<select id="adminUserOrderCntSelect" resultType="int">
+		SELECT COUNT(*)
+		FROM USER_ORDER
+	</select>
+	
+	<select id="adminUserOrderListSelect" parameterType="map" resultType="com.shoppingmall.belleaf.order.vo.UserOrderVO">
+		SELECT * FROM(
+		SELECT ROWNUM R_NUM, A.* FROM(
+		SELECT * FROM USER_ORDER ORDER BY ORDER_DATE DESC)
+		A) WHERE R_NUM BETWEEN #{start} AND #{end}
+	</select>
+	
+	<update id="adminUserOrderStateUpdate">
+		UPDATE USER_ORDER SET
+		USER_STATUS = 2
+		WHERE ORDER_ID = #{order_id}
+	</update>
+	
+</mapper>

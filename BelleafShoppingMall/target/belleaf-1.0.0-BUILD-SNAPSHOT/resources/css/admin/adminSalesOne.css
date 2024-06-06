@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+/*전체 레이아웃*/
+.OrderpageBodyStyle {
+	width: 70%; 
+	margin: auto;
+}
+.orderTalbeStyle {
+	padding: 5px 30px 30px 30px;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+}
+.orderTitleStyle {
+}
+.orderBodyStyle {
+	text-align: left;
+	line-height: 1.9rem;
+}
+.orderBodyStyle th {
+	padding-right: 10px;
+}
+/*order detail 목록*/
+.ListTableStyle {
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 13px;
+  width: 100%;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.ListTableStyle th, .ListTableStyle button {
+  text-align: center;
+}
+
+.ListTableStyle th, .ListTableStyle td {
+  padding: 14px 0;
+}
+
+.ListTableStyle tbody td {
+  border-top: 1px solid #e7e7e7;
+  text-align: center;
+}
+
+.ListTableStyle tbody th {
+  padding-left: 28px;
+  padding-right: 14px;
+  border-top: 1px solid #e7e7e7;
+  text-align: left;
+}
+
+/*버튼 css*/
+.BackBtn {
+	margin-top: 20px;
+	width: 90px;
+	padding: 4px 10px;
+	background: white;
+	border: 1px solid;
+	border-color: rgb(229, 170, 163);
+	color: rgb(229, 170, 163);
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.BackBtn:hover,
+.BackBtn:focus{
+	background-color: rgb(229, 170, 163);
+	color: white;
+	transition: 0.5s;
+}

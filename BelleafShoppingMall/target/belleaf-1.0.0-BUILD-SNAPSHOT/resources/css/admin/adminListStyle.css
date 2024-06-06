@@ -1,0 +1,192 @@
+@charset "UTF-8";
+
+/* header */
+#bodyContainer { 
+	width: 70%; 
+	margin: auto; 
+}
+
+.floatClearClass {
+  clear: both;
+  float: none;
+}
+
+.pageTitleArea{
+	text-align: center;
+    color: rgb(229, 170, 163);
+    padding: 30px 0px 0px 0px;
+    font-size: x-large;
+}
+
+/* search 에리어 */
+.searchTableStyle {
+	text-align: center;
+	margin-left: auto;
+  margin-right: auto;
+}
+.searchSelect, #textSearch, #btnSearch {
+	height: 35px;
+	line-height: 35px;
+	vertical-align: middle;
+	margin-right: 5px;
+	text-align: center;
+}
+.pageSearchArea, .pageBodyArea table {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.searchSelect {
+  padding: 6px 10px;
+}
+.searchSelect option{
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.pageSearchArea #textSearch {
+	text-align: left;
+	padding: 5px 10px;
+  	font-size: 17px;
+  	border: solid grey;
+  	border-width: 1px;
+  	background: white;
+  	border-radius: 4px;
+}
+.SearchTableCategoryArea {
+	text-align: center;
+	width: auto;
+	height: 0 auto;
+	vertical-align: middle;
+}
+
+.pageSearchArea #btnSearch {
+	padding-left: 40px;
+	padding-right: 40px;
+	text-align:center;
+	background-color: white;
+	border: 1px solid;
+	border-color: rgb(229, 170, 163);
+	color: rgb(229, 170, 163);
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+#btnSearch:hover,
+#btnSearch:focus{
+  border: rgb(229, 170, 163);
+  background: rgb(229, 170, 163);
+  color: white;
+  transition: 0.7s;
+}
+
+/* body 에리어 */
+.pageBodyArea table {
+  width: 100%;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.ListTableStyle {
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 13px;
+  width: 100%;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.ListTableStyle th, .ListTableStyle button {
+  text-align: center;
+}
+
+.ListTableStyle th, .ListTableStyle td {
+  padding: 14px 0;
+}
+
+.pageBodyArea tbody tr:hover {
+	background-color: rgb(211,211,211);
+}
+
+.ListTableStyle tbody td {
+  border-top: 1px solid #e7e7e7;
+  text-align: center;
+  cursor: pointer;
+}
+
+.ListTableStyle tbody th {
+  padding-left: 28px;
+  padding-right: 14px;
+  border-top: 1px solid #e7e7e7;
+  text-align: left;
+}
+
+
+/* 모든 버튼 스타일 */
+.floatRight {
+	float: right;
+}
+.pageBodyArea button,
+#btnReset{
+	width: 90px;
+	margin-left: 10px;
+	padding: 4px 10px;
+	background: white;
+	border: 1px solid;
+	border-color: rgb(229, 170, 163);
+	color: rgb(229, 170, 163);
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.pageBodyArea button:hover,
+.pageBodyArea button:focus,
+#btnReset:hover, #btnReset:focus{
+  border: rgb(229, 170, 163);
+  background: rgb(229, 170, 163);
+  color: white;
+  transition: 0.7s;
+}
+
+/*페이징 처리*/
+.pagingArea ul {
+    list-style: none;
+    padding: 0; 
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.pagingArea li {
+    margin: 0 5px;
+}
+
+.pagingArea li a,
+.pagingArea li span {
+    text-decoration: none; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    width: 35px; 
+    height: 35px; 
+    line-height: 35px; 
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+    color: #333;
+    background-color: #fff;
+}
+
+.pagingArea li.active span,
+.pagingArea li span {
+    border-color: #ccc;
+}
+
+.pagingArea li a:hover {
+    background-color: #e2e2e2;
+}
+
+.pagingArea li.disabled span {
+    color: #ccc;
+    cursor:  default;
+}

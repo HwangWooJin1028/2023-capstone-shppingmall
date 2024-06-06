@@ -1,0 +1,76 @@
+@startuml
+interface com.shoppingmall.belleaf.user.service.UserLoginService {
+~ UserVO getUser(UserVO)
+~ UserVO getId(UserVO)
+~ UserVO getpwd(UserVO)
+}
+
+class com.shoppingmall.belleaf.user.serviceimpl.UserLoginServiceImpl {
+- UserDAO userDAO
++ UserVO getUser(UserVO)
++ UserVO getId(UserVO)
++ UserVO getpwd(UserVO)
+}
+
+
+class com.shoppingmall.belleaf.user.serviceimpl.UserJoinServiceImpl {
+- UserDAO userDAO
++ int insertUser(UserVO)
++ int idCheck(String)
++ int passCheck(UserVO)
++ void secession(UserVO)
++ void updateUserInfo(UserVO)
++ String userPWcheck(UserVO)
++ UserVO getUserByIdPw(UserVO)
+}
+
+
+interface com.shoppingmall.belleaf.user.service.UserJoinService {
+~ int insertUser(UserVO)
+~ int idCheck(String)
+~ int passCheck(UserVO)
++ void secession(UserVO)
++ void updateUserInfo(UserVO)
++ String userPWcheck(UserVO)
++ UserVO getUserByIdPw(UserVO)
+}
+
+class com.shoppingmall.belleaf.user.dao.UserDAO {
+- SqlSessionTemplate mybatis
++ UserVO getUser(UserVO)
++ int insertUser(UserVO)
++ UserVO getId(UserVO)
++ UserVO getPwd(UserVO)
++ int idCheck(String)
++ void secession(UserVO)
++ void updateUserInfo(UserVO)
++ String userPWcheck(UserVO)
++ UserVO getUserByIdPw(UserVO)
+}
+
+
+class com.shoppingmall.belleaf.user.controller.UserJoinController {
+- UserJoinService userJoinService
++ String joinView()
++ String joinAction(UserVO,HttpServletRequest,String,String,String)
++ String idCheck(HttpServletRequest)
+}
+
+
+class com.shoppingmall.belleaf.user.controller.UserLoginController {
+- UserLoginService userLoginService
++ String loginView(Model,HttpServletRequest,HttpSession)
++ String logout(HttpSession,SessionStatus)
++ String loginAction(UserVO,HttpSession,HttpServletRequest,Model,String,String)
++ String findIdView()
++ String findIdAction(UserVO,HttpSession,Model,String,String,String,String)
++ String findPwdView()
++ String findPwdAction(UserVO,HttpSession,Model,String,String)
+}
+
+
+
+
+com.shoppingmall.belleaf.user.service.UserLoginService <|.. com.shoppingmall.belleaf.user.serviceimpl.UserLoginServiceImpl
+com.shoppingmall.belleaf.user.service.UserJoinService <|.. com.shoppingmall.belleaf.user.serviceimpl.UserJoinServiceImpl
+@enduml

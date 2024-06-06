@@ -1,0 +1,150 @@
+@charset "UTF-8";
+.content-prdqnaInfo {
+	
+	padding: 20px 0 16px;
+    clear: both;
+    width: 100%;
+    border-collapse: collapse;
+	background-color: #fff;
+    border-radius: 20px;
+    padding: 0 20px 10px;
+    margin-top: 20px;
+}
+.content-prdqnaInfo th{
+	padding: 20px;
+    border-bottom: 1px solid #e9e9e9;
+    color: #404040;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.6;
+}
+.content-prdqnaInfo tbody td {
+  padding: 20px;
+  text-align: center;
+  font-size: 13px;
+  cursor: pointer;
+}
+.content-prdqnaInfo tbody tr:hover,
+.content-prdqnaInfo tbody tr:focus {
+  text-decoration: underline;
+}
+/*페이징 처리*/
+.pagingArea ul {
+    list-style: none;
+    padding: 0; 
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.pagingArea li {
+    margin: 0 5px;
+}
+
+.pagingArea li a,
+.pagingArea li span {
+    text-decoration: none; 
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    height: 35px; 
+    line-height: 35px; 
+    border-bottom: 1px solid #ccc; 
+    color: #333;
+}
+
+.pagingArea li.active span,
+.pagingArea li span {
+    border-color: #ccc;
+}
+
+.pagingArea li a:hover {
+    background-color: #e2e2e2;
+}
+
+.pagingArea li.disabled span {
+    color: #ccc;
+    cursor:  default;
+}
+
+
+/*검색*/
+
+/* search 에리어 */
+.searchTableStyle {
+	text-align: center;
+	margin-left: auto;
+  margin-right: auto;
+}
+.searchSelect, #textSearch, #btnSearch {
+	height: 35px;
+	line-height: 35px;
+	vertical-align: middle;
+	margin-right: 5px;
+	text-align: center;
+}
+.pageSearchArea {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.searchSelect {
+  padding: 6px 10px;
+}
+.searchSelect option{
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.pageSearchArea #textSearch {
+	text-align: left;
+	padding: 5px 10px;
+  	font-size: 17px;
+  	border: solid grey;
+  	border-width: 1px;
+  	background: white;
+}
+.SearchTableCategoryArea {
+	text-align: center;
+	width: auto;
+	height: 0 auto;
+	vertical-align: middle;
+}
+
+.pageSearchArea #btnSearch {
+	padding-left: 40px;
+	padding-right: 40px;
+	text-align: center;
+	border: solid rgb(207,207,207);;
+	border-width: 1px;
+	background: transparent;
+	cursor: pointer;
+}
+
+#btnSearch:hover,
+#btnSearch:focus{
+  border: rgb(229, 170, 163);
+  background: rgb(229, 170, 163);
+  color: white;
+  transition: 0.7s;
+}
+
+.center-btn {
+	padding: 10px 40px;
+	text-align: center;
+	border: solid rgb(207,207,207);;
+	border-width: 1px;
+	background: transparent;
+	cursor: pointer;
+}
+
+.center-btn:hover,
+.center-btn:focus{
+  border: rgb(229, 170, 163);
+  background: rgb(229, 170, 163);
+  color: white;
+  transition: 0.7s;
+}

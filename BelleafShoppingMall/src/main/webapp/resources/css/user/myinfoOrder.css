@@ -1,0 +1,84 @@
+@charset "UTF-8";
+/*--------------------body ==> order-body --------------------*/
+/*right-area -> content 영역*/
+.content-body {
+	padding-top: 30px;
+}
+
+.content-orderbody {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	
+}
+.order-card {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    
+    border: 1px solid #dfd8d4;z
+    border-radius: 10px;
+    vertical-align: top;
+    margin: 0 2px;
+    width: calc(50% - 16px);
+    margin: 10px 8px;
+    padding: 0 50px;
+}
+.ordercard-subtitle {
+	color: #a1a5b6;
+}
+.ordercard-subcontent {
+	color: #d8dbe7;
+}
+
+.ordercard-content a:visited {
+	text-decoration: none;
+	color: black;
+}
+.order-buttonarea {
+	display: flex;
+	flex-direction: column;
+    flex-wrap: nowrap;
+    height: 100%;
+    
+}
+.order-move { 
+    margin-left: auto; 
+    margin-bottom: auto; 
+}
+
+.order-href { 
+    margin-left: auto; 
+    margin-bottom: 75px;
+    margin-top: 25px;
+}
+.order-buttonarea a {
+	text-decoration: none;
+	color: rgb(229, 170, 163);
+}
+.order-buttonarea a:hover,
+.order-buttonarea a:focus {
+	text-decoration: none;
+	color: rgb(229, 170, 163);
+	transition: 0.7s;
+}
+.order-buttonarea a:visited {
+	text-decoration: none;
+	color:rgb(61, 130, 247);
+}
+.ordercontent-button {
+  padding: 10px 10px;
+  border: solid rgb(207,207,207);;
+  border-width: 1px;
+  background: transparent;
+  cursor: pointer;
+  margin: auto !important;
+}
+.ordercontent-button:hover,
+.ordercontent-button:focus {
+  border: rgb(229, 170, 163);
+  background: rgb(229, 170, 163);
+  color: white;
+  transition: 0.7s;
+}

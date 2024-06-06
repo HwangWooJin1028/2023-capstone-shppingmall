@@ -1,0 +1,201 @@
+@charset "UTF-8";
+#container { 
+	width: 70%; 
+	margin: auto; 
+}
+.rajdhani-light {
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+.noto-sans-kr-category {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+}
+.slideshow-container {
+  width: 100%;
+  height: auto;
+  position: relative;
+  margin: auto;
+  padding: 0; 
+  display: block;
+   object-fit: cover;
+}
+
+.slideshow-container img {
+  width: 100%;
+  height: 100vh; /* 화면의 높이에 맞춤 */
+  object-fit: cover;
+}
+.bennerArea {
+  margin: 15px;
+  display: flex;
+  align-items: center; 
+  justify-content: space-between;
+  height: 100%;
+}
+
+.benneritemstyle {
+  z-index: 1; /* Ensure text/button appears above the image */
+}
+
+.imgStyleArea {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%); 
+  z-index: 0;
+}
+
+.slideshow-container {
+	
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+}
+.slideshow-container h2,
+.slideshow-container p  {
+    margin-left: 30px;
+    color: white;
+    margin-bottom: 2px;
+    
+}
+.benneritemstyle a {
+    margin-left: 30px;
+	text-decoration: none;
+	background: transparent;
+	border: 2px solid #fff;
+	color: #fff;
+	border-radius: 30px;
+	padding: 10px 30px;
+	font-size: 15px;
+	cursor: pointer;
+}
+.benneritemstyle a:hover,
+.benneritemstyle a:focus {
+  	border-color: rgb(231, 76, 60);
+  	color: rgb(231, 76, 60);
+	transition: 0.3s;
+}
+@media (max-width: 945px) {
+  .slideshow-container {
+    flex-direction: column; 
+  }
+
+  .imgStyleArea, 
+  .benneritemstyle {
+    max-width: none; 
+    width: 100%; 
+  }
+
+  .imgStyleArea {
+    display: none;
+    transition: 0.3s;
+  }
+
+  .benneritemstyle {
+    order: 1;
+  }
+}
+/* body 영역 */
+div.categoryTitleArea a{
+	float: left;
+	overflow: visible
+}
+div.categoryItemArea {
+  float: left;
+  margin: 5px;
+  border: 1px solid #ccc;
+  width: 250px;
+}
+
+.categoryItemArea {
+  float: left;
+  margin: 5px;
+  border: 1px solid #ccc;
+  width: calc(20% - 10px); /* 전체 너비의 20%에서 마진을 뺀 값으로 설정 */
+  box-sizing: border-box; /* 패딩과 보더가 너비에 포함되도록 설정 */
+}
+
+.categoryArea {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* 아이템을 왼쪽 정렬로 시작 */
+  align-items: stretch; /* 아이템의 높이를 같게 조정 */
+}
+
+div.categoryTitleArea a {
+	text-decoration: none;
+	color: black;
+}
+
+div.categoryItemArea:hover {
+  border: 1px solid #777;
+}
+
+div.categoryItemArea img {
+  width: 100%;
+  height: 200px;
+  display: block;
+  object-fit: cover; /* 이미지가 비율을 유지하면서 컨테이너를 채우도록 합니다. */
+
+}
+
+div.desc {
+  margin: 15px;
+  text-align: center;
+}
+
+.categoryList {
+	display: flex;
+	align-content: center;
+	flex-direction: row;
+}
+.item {
+	width: 30%;
+}
+/* Slick slider arrow button styling */
+.slick-prev,
+.slick-next {
+  font-size: 24px;
+  color: #fff;
+  line-height: 1;
+  opacity: 0.75;
+  background-color: #333;
+  border: 0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  opacity: 1;
+  background-color: #555;
+}
+
+/* Position the arrows correctly */
+.slick-prev {
+  left: -45px;
+  z-index: 1;
+}
+
+.slick-next {
+  right: -45px;
+  z-index: 1;
+}
+
+/* Fix for Slick slider buttons appearing on other elements */
+.slick-slider .slick-prev, 
+.slick-slider .slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+ 

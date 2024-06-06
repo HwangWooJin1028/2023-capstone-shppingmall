@@ -1,0 +1,128 @@
+@charset "UTF-8";
+* {
+	font-family: "Noto Sans KR", sans-serif;
+}
+.review-container {
+	
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+span>a {
+	font-size: 65px;
+	text-decoration: none;
+}
+
+.review-title {
+	margin: 30px 0px;
+}
+/*product data*/
+.review-card {
+    
+    border: 1px solid #dfd8d4;
+    padding: 50px;
+    border-radius: 10px;
+    vertical-align: top;
+    margin: 0 2px;
+    width: calc(50% - 16px);
+    margin: 10px 8px;
+}
+.reviewcard-top {
+	display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    vertical-align: middle;
+}
+.reviewcard-bottom {
+	margin-top: 30px;
+}
+.reviewcard-content {
+	display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    vertical-align: middle;
+}
+.reviewcard-content img {
+	width: 150px;
+	height: 150px;
+	margin-right: 30px;
+}
+.review-producttext {
+	border-left: 1px;
+	border-left-style: solid;
+	border-left-color: rgb(225, 228, 230);
+	margin: 0px 10px 10px 10px;
+	display: flex;
+	flex-direction: column;
+	padding-top: 3px;
+	padding-left: 30px;
+	text-align: left;
+}
+
+.review-buttonarea {
+	display: flex;
+	flex-direction: column;
+    margin-left: auto; 
+    margin-bottom: auto; 
+}
+
+.review-button{
+  padding: 10px 10px;
+  border: solid rgb(207,207,207);;
+  border-width: 1px;
+  background: transparent;
+  cursor: pointer;
+  margin: auto !important;
+}
+.review-button:hover,
+.review-button:focus {
+  border: rgb(229, 170, 163);
+  background: rgb(229, 170, 163);
+  color: white;
+  transition: 0.7s;
+}
+
+
+/*페이징 처리*/
+.pagingArea ul {
+    list-style: none;
+    padding: 0; 
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.pagingArea li {
+    margin: 0 5px;
+}
+
+.pagingArea li a,
+.pagingArea li span {
+    text-decoration: none; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    width: 35px; 
+    height: 35px; 
+    line-height: 35px; 
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+    color: #333;
+    background-color: #fff;
+}
+
+.pagingArea li.active span,
+.pagingArea li span {
+    border-color: #ccc;
+}
+
+.pagingArea li a:hover {
+    background-color: #e2e2e2;
+}
+
+.pagingArea li.disabled span {
+    color: #ccc;
+    cursor:  default;
+}

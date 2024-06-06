@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reviewDAO">
+	<!-- 관리자페이지에서 리뷰 리스트 개수 구하기 -->
+	<select id="adminReviewListCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM PRODUCT P, REVIEW R, USER_ORDER UO,  USERORDER_DETAIL UD
+		WHERE R.ORDER_DETAIL_ID = UD.ORDER_DETAIL_ID
+		AND UD.ORDER_ID = UO.ORDER_ID
+		AND UD.PRODUCT_ID = P.PRODUCT_ID
+		<if test="searchKeyword!=''">
+			<if test="searchCondition=='REVIEW_CONTNET'">
+				AND R.REVIEW_CONTENT LIKE '%'||#{searchKeyword}||'%'
+			</if>
+			<if test="searchCondition=='PRODUCT_ID'">
+				AND P.PRODUCT_ID = TO_NUMBER(#{searchKeyword})
+			</if>
+			<if test="searchCondition=='PRODUCT_NAME'">
+				AND P.PRODUCT_NAME LIKE '%'||#{searchKeyword}||'%'
+			</if>
+		</if>
+		<if test="prd_category!=''">
+			<if test="prd_category == 1">
+				AND P.CATEGORY_CODE = 1
+			</if>
+			<if test="prd_category == 2">
+				AND P.CATEGORY_CODE = 2
+			</if>
+			<if test="prd_category == 3">
+				AND P.CATEGORY_CODE = 3
+			</if>
+			<if test="prd_category == 4">
+				AND P.CATEGORY_CODE = 4
+			</if>
+		<if test="prd_category==5">
+			AND PRODUCT.CATEGORY_CODE=5
+		</if>
+		</if>
+		ORDER BY UO.ORDER_DATE DESC
+	</select>
+	
+	<!-- 관리자페이지에서 페이징한 리스트 전체 값 구하기 -->
+	<select id="adminReviewList" parameterType="map" resultType="map">
+		SELECT * 
+		FROM( SELECT ROWNUM R_NUM, A.* 
+		FROM ( SELECT R.*, P.PRODUCT_ID, P.PRODUCT_NAME, P.CATEGORY_CODE, UO.ORDER_DATE, UD.USER_ID 
+		FROM PRODUCT P, REVIEW R, USER_ORDER UO,  USERORDER_DETAIL UD
+		WHERE R.ORDER_DETAIL_ID = UD.ORDER_DETAIL_ID
+		AND UD.ORDER_ID = UO.ORDER_ID
+		AND UD.PRODUCT_ID = P.PRODUCT_ID
+		
+		<if test="searchKeyword!=''">
+			<if test="searchCondition=='REVIEW_CONTNET'">
+				AND R.REVIEW_CONTENT LIKE '%'||#{searchKeyword}||'%'
+			</if>
+			<if test="searchCondition=='PRODUCT_ID'">
+				AND P.PRODUCT_ID = TO_NUMBER(#{searchKeyword})
+			</if>
+			<if test="searchCondition=='PRODUCT_NAME'">
+				AND P.PRODUCT_NAME LIKE '%'||#{searchKeyword}||'%'
+			</if>
+		</if>
+		<if test="prd_category!=''">
+			<if test="prd_category == 1">
+				AND P.CATEGORY_CODE = 1
+			</if>
+			<if test="prd_category == 2">
+				AND P.CATEGORY_CODE = 2
+			</if>
+			<if test="prd_category == 3">
+				AND P.CATEGORY_CODE = 3
+			</if>
+			<if test="prd_category == 4">
+				AND P.CATEGORY_CODE = 4
+			</if>
+		<if test="prd_category==5">
+			AND PRODUCT.CATEGORY_CODE=5
+		</if>
+		</if>
+		ORDER BY UO.ORDER_DATE DESC )A)
+		WHERE R_NUM BETWEEN TO_NUMBER(#{start}) AND TO_NUMBER(#{end})
+	</select>
+
+	<!-- 리뷰 삭제하기 -->
+	<delete id="ReviewDelete" parameterType="ReviewVO">
+		DELETE FROM REVIEW
+		WHERE REVIEW_ID = #{review_id}
+	</delete>
+		<!-- 상품 리뷰 페이징 처리 - 해당하는 상품의 리스트 cnt 가져오기 -->
+	<select id="productReviewCntSelectR" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM REVIEW, USERORDER_DETAIL
+		WHERE REVIEW.ORDER_DETAIL_ID = USERORDER_DETAIL.ORDER_DETAIL_ID
+		AND USERORDER_DETAIL.PRODUCT_ID = #{product_id}
+	</select>
+	
+	<!-- 상품 리뷰 페이징 처리 - 해당하는 상품의 리스트 가져오기 -->
+	<select id="productReviewSelectR" parameterType="map" resultType="map">
+		SELECT * FROM(SELECT ROWNUM R_NUM, A.* 
+		FROM ( SELECT R.REVIEW_GRADE, R.REVIEW_CONTENT, R.REVIEW_ID, U.USER_NICKNAME,UO.ORDER_DATE
+		FROM REVIEW R, USERS U, USER_ORDER UO, USERORDER_DETAIL UD, PRODUCT P
+		WHERE R.ORDER_DETAIL_ID = UD.ORDER_DETAIL_ID
+		AND UD.ORDER_ID = UO.ORDER_ID
+		AND UD.PRODUCT_ID = P.PRODUCT_ID
+		AND UO.USER_ID = U.USER_ID
+		AND P.PRODUCT_ID = TO_NUMBER(#{product_id})
+		ORDER BY R.REVIEW_ID DESC) A )
+		WHERE R_NUM BETWEEN TO_NUMBER(#{start}) AND TO_NUMBER(#{end})
+	</select>
+	
+	<!-- 상품 리뷰 페이징처리 X - 해당하는 상품의 리스트 전체 가져오기 -->
+	<select id="productReviewSelectAll" parameterType="int" resultType="map">
+		SELECT R.REVIEW_GRADE, R.REVIEW_CONTENT, R.REVIEW_ID, U.USER_NICKNAME,UO.ORDER_DATE
+		FROM REVIEW R, USERS U, USER_ORDER UO, USERORDER_DETAIL UD, PRODUCT P
+		WHERE R.ORDER_DETAIL_ID = UD.ORDER_DETAIL_ID
+		AND UD.ORDER_ID = UO.ORDER_ID
+		AND UD.PRODUCT_ID = P.PRODUCT_ID
+		AND UO.USER_ID = U.USER_ID
+		AND P.PRODUCT_ID = #{product_id}
+		ORDER BY R.REVIEW_ID DESC
+	</select>
+	
+		<!-- mypage - 리뷰 수정 -->
+	<update id="updateReview" parameterType="ReviewVO">
+		UPDATE REVIEW SET
+		REVIEW_GRADE = #{review_grade},
+		REVIEW_CONTENT = #{review_content}
+		WHERE REVIEW_ID = #{review_id}
+	</update>
+	
+	<!-- mypage - 리뷰가 있는지 확인하기 -->
+	<select id="existReview" parameterType="MyInfoVO" resultType="int">
+		SELECT COUNT(*)
+		FROM REVIEW
+		WHERE ORDER_DETAIL_ID = #{order_detail_id}
+	</select>
+	
+	<!-- mypage - order_detail_id로 myInfoVO(주문내역) 조회하기 -->
+	<select id="getMyOrderByori" resultType="map" parameterType="MyInfoVO">
+		SELECT UO.ORDER_ID, UO.ORDER_DATE, UO.ORDER_ADDR, UO.ORDER_ADDR_D
+		, UO.ORDER_ZIPCODE, UO.ORDER_RECEIVER, UO.ORDER_PHONE
+		, UO.ORDER_TOTAL, UO.USER_STATUS, UO.USER_ID
+		, UOD.ORDER_DETAIL_ID, UOD.USER_ORDER_CNT, UOD.PRODUCT_ID
+		, P.CATEGORY_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE, P.PRODUCT_STOCK
+		, P.PRODUCT_INFO, P.PRODUCT_DISCOUNT, P.PRODUCT_STATE, P.PRODUCT_PIC
+		FROM USER_ORDER UO, USERORDER_DETAIL UOD, PRODUCT P
+		WHERE UO.ORDER_ID = UOD.ORDER_ID
+		AND UOD.PRODUCT_ID = P.PRODUCT_ID
+		AND UOD.ORDER_DETAIL_ID = #{order_detail_id}
+	</select>
+	
+	<!-- mypage -  리뷰 입력 -->
+	<insert id="insertReview" parameterType="ReviewVO">
+		INSERT INTO REVIEW(REVIEW_ID, ORDER_DETAIL_ID, REVIEW_CONTENT, REVIEW_GRADE)
+		VALUES((SELECT NVL(MAX(REVIEW_ID),0)+1 FROM REVIEW),#{order_detail_id}, #{review_content}, #{review_grade})
+	</insert>
+	
+	<!-- mypage - review_id로 리뷰 조회(수정에 사용) -->
+	<select id="getReviewByReviewID" parameterType="int" resultType="map">
+		SELECT R.REVIEW_GRADE, R.REVIEW_CONTENT, R.REVIEW_ID, P.PRODUCT_NAME, P.PRODUCT_PIC, P.PRODUCT_PRICE, D.USER_ORDER_CNT, D.ORDER_DETAIL_ID
+		FROM REVIEW R, PRODUCT P, USERORDER_DETAIL D, USER_ORDER O
+		WHERE R.ORDER_DETAIL_ID = D.ORDER_DETAIL_ID
+		AND D.ORDER_ID = O.ORDER_ID
+		AND D.PRODUCT_ID = P.PRODUCT_ID
+		AND R.REVIEW_ID = #{review_id}
+	</select>
+	
+	<!-- mypage - 나의 상품 리뷰 목록 -->
+	<select id="getMyReviewList" parameterType="map" resultType="map">
+		SELECT * FROM ( SELECT ROWNUM R_NUM, A.*
+		FROM (SELECT P.PRODUCT_PIC, P.PRODUCT_NAME,P.PRODUCT_PRICE, UO.ORDER_DATE, R.REVIEW_GRADE, R.REVIEW_CONTENT, R.REVIEW_ID
+		FROM REVIEW R, PRODUCT P, USER_ORDER UO, USERORDER_DETAIL UD
+		WHERE R.ORDER_DETAIL_ID = UD.ORDER_DETAIL_ID
+		AND UD.ORDER_ID = UO.ORDER_ID
+		AND UD.PRODUCT_ID = P.PRODUCT_ID
+		AND UO.USER_ID = #{user_id}
+		ORDER BY R.REVIEW_ID DESC ) A )
+		WHERE R_NUM BETWEEN TO_NUMBER(#{start}) AND TO_NUMBER(#{end})
+	</select>
+	
+	<!-- mypage - 고객의 리뷰 개수 -->
+	<select id="getMyReviewListCnt" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM REVIEW R, PRODUCT P, USER_ORDER UO, USERORDER_DETAIL UD
+		WHERE R.ORDER_DETAIL_ID = UD.ORDER_DETAIL_ID
+		AND UD.ORDER_ID = UO.ORDER_ID
+		AND UD.PRODUCT_ID = P.PRODUCT_ID
+		AND UO.USER_ID = #{user_id}
+		ORDER BY R.REVIEW_ID DESC
+	</select>
+</mapper>

@@ -1,0 +1,124 @@
+@charset "UTF-8";
+]
+/*---------레이아웃 설정--------*/
+* {
+	box-sizing: border-box;
+	font-family: "Noto Sans KR", sans-serif;
+}
+.floatClearClass {
+	clear: both;
+  	float: none;
+}
+.myinfo-body { 
+	width: 70%; 
+	margin: auto; 
+	padding-top: 30px;
+	padding-left: 3px;
+}
+.all-body {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	
+}
+
+
+/* ----------left-area -> 왼쪽메뉴 설정 -------------*/
+.left-area {
+	
+}
+.leftmenu-title {
+	height: 65px;
+	width: 150px;
+	text-align: center; 
+	border-width: 1px 1px 1px;
+    border-style: solid;
+    border-color: rgb(225, 228, 230);
+    align-content: center;
+    background-color: rgb(40, 109, 180);
+    color: #FFFFFF;
+}
+.leftmenu-items {
+	width: 150px;
+	padding: 0px 0px 20px 0px;
+	background-color: rgb(249, 249, 249);
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: rgb(225, 228, 230);
+    border-image: initial;
+    color: rgb(17, 17, 17);
+}
+.leftmenu-items ul{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.menu-item {
+	padding: 20px 20px;
+}
+
+.endmenu-borderbottom {
+	border-bottom: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: rgb(225, 228, 230);
+}
+
+.menu-content {
+	padding-top: 10px;
+	font-size: small;
+}
+
+.menu-content a {
+	cursor: pointer;
+}
+.menu-content a:hover,
+.menu-content a:focus {
+	color: rgb(61, 130, 247);
+}
+.menu-content li {
+	padding: 5px 0px;
+}
+/* -----------right-area------------- */
+.right-area {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+/* right-area -> 상단메뉴 설정 */
+.topmenu-area {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	width: 100%;
+}
+
+.topmenu-content {
+	padding: 10px 20px;
+	height: 65px;
+	width: 33%;
+	align-content: center;
+	text-align: center; 
+	border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-color: rgb(225, 228, 230);
+    background-color: rgb(155, 201, 232);
+    color: #FFFFFF;
+}
+
+.topmenu-key {
+	float:left;
+	text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px;
+}
+
+.topmenu-value {
+	float: right;
+	text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px;
+}
+
+/*right-area -> content 영역*/
+.content-body {
+	padding-left: 30px;
+	padding-top: 30px;
+}

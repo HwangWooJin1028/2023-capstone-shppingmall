@@ -13,7 +13,10 @@
 <br/><br/><br/><br/>
 
 ## 기능구조도
-![image](https://github.com/HwangWooJin1028/2023-capstone-shppingmall/assets/95200625/c70f7c6d-acb0-451a-aae4-9bef9510de08)
+### 일반 사용자 기능 구조도
+![image](https://github.com/HwangWooJin1028/2023-capstone-shppingmall/assets/95200625/f09ae7f9-52a3-428d-933b-2430d134390e)
+### 관리자 기능 구조도
+![image](https://github.com/HwangWooJin1028/2023-capstone-shppingmall/assets/95200625/274b3a12-e090-4eec-8407-6c37d3b0e8eb)
 <br/><br/><br/><br/>
 
 ## 시스템구상도

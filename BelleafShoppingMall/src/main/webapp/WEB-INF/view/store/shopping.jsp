@@ -139,7 +139,7 @@
 					$("#paymemt").click(function() {
 						var IMP = window.IMP;
 						// 포트원에서 가맹점 식별코드 가져오기
-						IMP.init('imp38200852');
+						IMP.init('');
 						IMP.request_pay({
 							pg: "html5_inicis.INIpayTest",
 							pay_method: "card",

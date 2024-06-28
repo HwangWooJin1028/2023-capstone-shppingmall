@@ -1,6 +1,10 @@
 <div align="center">  
 
 # 2024년 임산부를 위한 친환경 쇼핑몰 프로젝트
+(현재 비활성화 상태. 활성화를 원할 시, 다음 Gmail 뱃지를 클릭하여 연락해주세요.)<br/>
+<a href="mailto:1028hwj@gmail.com" target="_blank">
+<img src="https://img.shields.io/badge/Gmail-EA4335.svg?style=flat-square&logo=Gmail&logoColor=white"/>
+</a><br/><br/>
 [<img src="https://img.shields.io/badge/BELLEAF 홈페이지-83B81A?style=for-the-badge&logoColor=white"/>](http://ec2-13-209-174-125.ap-northeast-2.compute.amazonaws.com:8080)
 <br/><br/>
   

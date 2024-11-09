@@ -23,7 +23,7 @@ public class OpenAiService {
 	public static String openAI(String message) {
 		String url = "https://api.openai.com/v1/chat/completions";
 		String apiKey = "";
-		String model = "gpt-3.5-turbo";
+		String model = "gpt-4o-mini";
 		
 		try {
 			

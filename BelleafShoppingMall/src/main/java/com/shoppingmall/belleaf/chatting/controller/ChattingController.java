@@ -80,7 +80,7 @@ public class ChattingController {
 	
 	public static String chatGPT(String message) {
 		String url = "https://api.openai.com/v1/chat/completions";
-		String apiKey = "sk-proj-9XWfi4VGTGPX8a7uOXdKT3BlbkFJCifbSfoPafsjcxmZRfzP";
+		String apiKey = "";
 		String model = "gpt-3.5-turbo";
 		
 		try {
